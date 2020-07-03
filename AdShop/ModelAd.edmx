@@ -1,0 +1,225 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище AdShopModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="EntitySet">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="inn" Type="bigint" />
+          <Property Name="Name" Type="nvarchar(max)" />
+          <Property Name="Address" Type="nvarchar(max)" />
+          <Property Name="Email" Type="nvarchar(max)" />
+          <Property Name="idManager" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="IndividualsSet">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="inn" Type="bigint" />
+          <Property Name="FirstName" Type="nvarchar(max)" />
+          <Property Name="MiddleName" Type="nvarchar(max)" />
+          <Property Name="LastName" Type="nvarchar(max)" />
+          <Property Name="Gender" Type="int" />
+          <Property Name="Email" Type="nvarchar(max)" />
+          <Property Name="idManager" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ManagerSet">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar(max)" />
+          <Property Name="MiddleName" Type="nvarchar(max)" />
+          <Property Name="LastName" Type="nvarchar(max)" />
+          <Property Name="Email" Type="nvarchar(max)" />
+        </EntityType>
+        <Association Name="FK_EntitySet_ManagerSet">
+          <End Role="ManagerSet" Type="Self.ManagerSet" Multiplicity="1" />
+          <End Role="EntitySet" Type="Self.EntitySet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ManagerSet">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="EntitySet">
+              <PropertyRef Name="idManager" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_IndividualsSet_ManagerSet">
+          <End Role="ManagerSet" Type="Self.ManagerSet" Multiplicity="1" />
+          <End Role="IndividualsSet" Type="Self.IndividualsSet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ManagerSet">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="IndividualsSet">
+              <PropertyRef Name="idManager" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище AdShopModelContainer">
+          <EntitySet Name="EntitySet" EntityType="Self.EntitySet" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="IndividualsSet" EntityType="Self.IndividualsSet" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ManagerSet" EntityType="Self.ManagerSet" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_EntitySet_ManagerSet" Association="Self.FK_EntitySet_ManagerSet">
+            <End Role="ManagerSet" EntitySet="ManagerSet" />
+            <End Role="EntitySet" EntitySet="EntitySet" />
+          </AssociationSet>
+          <AssociationSet Name="FK_IndividualsSet_ManagerSet" Association="Self.FK_IndividualsSet_ManagerSet">
+            <End Role="ManagerSet" EntitySet="ManagerSet" />
+            <End Role="IndividualsSet" EntitySet="IndividualsSet" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="AdShopModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="EntitySet">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="inn" Type="Int64" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="idManager" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="ManagerSet" Relationship="Self.FK_EntitySet_ManagerSet" FromRole="EntitySet" ToRole="ManagerSet" />
+        </EntityType>
+        <EntityType Name="IndividualsSet">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="inn" Type="Int64" />
+          <Property Name="FirstName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="MiddleName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Gender" Type="Int32" />
+          <Property Name="Email" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="idManager" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="ManagerSet" Relationship="Self.FK_IndividualsSet_ManagerSet" FromRole="IndividualsSet" ToRole="ManagerSet" />
+        </EntityType>
+        <EntityType Name="ManagerSet">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="MiddleName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="EntitySet" Relationship="Self.FK_EntitySet_ManagerSet" FromRole="ManagerSet" ToRole="EntitySet" />
+          <NavigationProperty Name="IndividualsSet" Relationship="Self.FK_IndividualsSet_ManagerSet" FromRole="ManagerSet" ToRole="IndividualsSet" />
+        </EntityType>
+        <Association Name="FK_EntitySet_ManagerSet">
+          <End Role="ManagerSet" Type="Self.ManagerSet" Multiplicity="1" />
+          <End Role="EntitySet" Type="Self.EntitySet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ManagerSet">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="EntitySet">
+              <PropertyRef Name="idManager" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_IndividualsSet_ManagerSet">
+          <End Role="ManagerSet" Type="Self.ManagerSet" Multiplicity="1" />
+          <End Role="IndividualsSet" Type="Self.IndividualsSet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ManagerSet">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="IndividualsSet">
+              <PropertyRef Name="idManager" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="AdShopEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="EntitySet" EntityType="Self.EntitySet" />
+          <EntitySet Name="IndividualsSet" EntityType="Self.IndividualsSet" />
+          <EntitySet Name="ManagerSet" EntityType="Self.ManagerSet" />
+          <AssociationSet Name="FK_EntitySet_ManagerSet" Association="Self.FK_EntitySet_ManagerSet">
+            <End Role="ManagerSet" EntitySet="ManagerSet" />
+            <End Role="EntitySet" EntitySet="EntitySet" />
+          </AssociationSet>
+          <AssociationSet Name="FK_IndividualsSet_ManagerSet" Association="Self.FK_IndividualsSet_ManagerSet">
+            <End Role="ManagerSet" EntitySet="ManagerSet" />
+            <End Role="IndividualsSet" EntitySet="IndividualsSet" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище AdShopModelContainer" CdmEntityContainer="AdShopEntities">
+          <EntitySetMapping Name="EntitySet">
+            <EntityTypeMapping TypeName="AdShopModel.EntitySet">
+              <MappingFragment StoreEntitySet="EntitySet">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="inn" ColumnName="inn" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="idManager" ColumnName="idManager" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="IndividualsSet">
+            <EntityTypeMapping TypeName="AdShopModel.IndividualsSet">
+              <MappingFragment StoreEntitySet="IndividualsSet">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="inn" ColumnName="inn" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="idManager" ColumnName="idManager" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ManagerSet">
+            <EntityTypeMapping TypeName="AdShopModel.ManagerSet">
+              <MappingFragment StoreEntitySet="ManagerSet">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
